@@ -1,0 +1,78 @@
+- Thu Jan 17 2007
+   * Code updated to be Slim and 3.XX firmwares compatible
+   * Code updated to 0.5.3 to be able to play on latest online servers
+   * Bug from last resize of replace trains window fixed
+   * Windows can now be dragged out of screen limits, to be able to see
+windows which exceded the screen height, such as the patches configuration
+dialog, just hold square pressed over a window to move it
+   * Place Tree window now is displayed inside screen limits
+   * PSP dedicated server upgraded to 0.5.3
+
+- Tue Jul 24 2007
+   * Code updated to 0.5.2 to be able to play on latest online servers
+   * Game crash when suspending fixed
+   * Native PSP sound effects driver developed instead of using SDL_mixer
+   * Fixed sound & music mixer volumes
+   * Sound effects speedup bug fixed
+   * Replace trains window resized to fit psp screen
+   * Extra viewport window resized to fit psp screen
+   * PSP dedicated server upgraded to 0.5.2
+
+- Wed Mar 14 2007
+   * Midi custom playlist and midi player segmentations fixed.
+   * Code updated to 0.5.0 final version.
+   * PSP dedicated servers upgraded to 0.5.0
+
+- Fri Feb 9 2007
+   * Midi background music finally supported using libtimidity.
+   * NewGRF support works now due to new file handling.
+   * New fileio handling to allow psp open more than 10 graphics files.
+   * Now full keyboard support & multiplayer chat.
+   * PSP OSK keyboard replaced with danzeff OSK.
+   * Code updated to v0.5.0-RC4, compatible with latest online servers.
+
+- Tue May 30 2006 @ Development Release 
+   * Key shorcut added for network chat (select + right)
+   * Code updated to v0.4.7, compatible with latest version network servers
+   * Added keyboard support using PSP OSK
+
+- Mon Mar 27 2006
+   * Network game window resized
+   * Language packs issues fixed (thanks to Sharkus for the patch)
+   * Directory navigation root path fixed
+   * Added retry timeout when connecting to wireless network
+   * Network button disabled when network not available
+   * CPU speed changes automatically to 333 Mhz when joining network game
+   * Cheat window support added (thanks to RacerII for the patch)
+   * Free space display fixed (thanks to Silentdragon for the patch)
+   * Added DHCP support (thanks to Silentdragon for the patch)
+   * Code updated to 0.4.5 version
+   * Multiplayer game enabled
+   * Messages added when changing cpu speed
+
+- Wed Feb 8 2006
+   * Map button crash fixed & window resized
+   * Scenario select window resized
+   * Scenario creation toolbar resized
+   * Dropdown menus from toolbar repositioned
+   * News sumary positioning fixed
+   * Crash when pressing rail construction blank space fixed
+   * Save/Load windows resized to fit ok
+   * Mouse algorithm improved
+   * Mouse getting out the screen fixed
+   * Cpu speed changed to 222mhz by default 
+   * Ctrl + click support added, used for presignals (square + cross)
+
+- Mon Jan 30 2006
+   * Fixed fileio problems, this enables
+       ** Save/Load games
+	   ** Save/Load scenearios
+	   ** Play any of the four landscape types
+	   ** Save ingame modified settings
+   * Triangle deleting main screen fixed
+   * Some debug messages added when missing files
+   * Added screenshot support presing select button
+
+
+- Thu Jan 26 2006
+   * First public release

@@ -1,0 +1,34 @@
+openttd for Debian
+------------------
+
+To properly play this game, original data files are needed.
+You should copy the data files from the original TTD into the data directory
+(/usr/share/games/openttd/data). You should copy these files:
+* trg1r.grf
+* trgcr.grf
+* trghr.grf
+* trgir.grf
+* trgtr.grf
+* sample.cat
+
+-Music
+	For in game music (optional), you should copy all files in the gm/
+	subdir of your ttd installation to /usr/share/games/openttd/gm.  You
+	should also install timidity and a soundfont (freepats is packaged in
+	debian and works out of the box).
+
+	Don't forget to use -m extmidi if you want music, and if you have
+	problems, remember that not all audio devices support multiple
+	audiostreams (music and sound), so you might have to use software
+	mixing. My VIA AC97 device cannot do hardware mixing, for example.
+
+-Scenarios
+	There are a few scenarios included in this release. When you start
+	openttd it will look for scenarios in ~/.openttd/scenario, while the
+	premade scenarios are in /usr/share/games/openttd/data/scenario. You
+	have two options to use the scenarios.
+	* Navigate to /usr/share/games/openttd/data/scenario within openttd.
+	* Copy scenarios from /usr/share/games/openttd/data/scenario to
+	  ~/.openttd/scenario. We are looking into a better solution for this.
+
+ -- Matthijs Kooijman <m.kooijman@student.utwente.nl>, Tue, 25 Jan 2004 14:11:01 +0200

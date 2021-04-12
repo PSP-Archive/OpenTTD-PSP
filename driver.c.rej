@@ -1,0 +1,28 @@
+***************
+*** 57,67 ****
+  #if defined(__APPLE__) && !defined(DEDICATED)
+  	M("qt",      "QuickTime MIDI Driver",   &_qtime_music_driver),
+  #endif
+- #ifdef UNIX
+  #if !defined(__MORPHOS__) && !defined(__AMIGA__)
+  	M("extmidi", "External MIDI Driver",    &_extmidi_music_driver),
+  #endif
+  #endif
+  	M("null",    "Null Music Driver",       &_null_music_driver),
+  	M(NULL, NULL, NULL)
+  };
+--- 59,72 ----
+  #if defined(__APPLE__) && !defined(DEDICATED)
+  	M("qt",      "QuickTime MIDI Driver",   &_qtime_music_driver),
+  #endif
++ #if defined(UNIX)
+  #if !defined(__MORPHOS__) && !defined(__AMIGA__)
+  	M("extmidi", "External MIDI Driver",    &_extmidi_music_driver),
+  #endif
+  #endif
++ #ifdef PSP
++ 	M("psp_timidity", "LibTimidity for PSP",    &_psptimi_music_driver),
++ #endif
+  	M("null",    "Null Music Driver",       &_null_music_driver),
+  	M(NULL, NULL, NULL)
+  };

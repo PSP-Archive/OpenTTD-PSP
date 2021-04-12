@@ -1,0 +1,269 @@
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN">
+<html>
+<head>
+  <meta content="text/html; charset=UTF-8" http-equiv="content-type">
+  <meta name="Description" content="Structure of OpenTTD (OTTD) landscape arrays #2">
+  <title>OpenTTD Landscape Internals - #2</title>
+  <style type="text/css">
+    span.abuse { font-family: "Courier New", Courier, mono; background-color: rgb(255, 58, 31); }
+    span.free  { font-family: "Courier New", Courier, mono; background-color: rgb(30, 178, 54); }
+    span.used  { font-family: "Courier New", Courier, mono; }
+    td.bits    { white-space: nowrap; text-align: center; font-family: "Courier New", Courier, mono; }
+    td.caption { white-space: nowrap; text-align: left; }
+    td li      { white-space: nowrap; text-align: left; }
+    th         { white-space: nowrap; text-align: center; }
+  </style>
+</head>
+<body style="direction: ltr;">
+<h3 style="font-weight: bold;">Landscape</h3>
+<span style="font-weight: bold;"></span>Five attributes hold the information about a tile.
+This can be seen in the <a href="landscape.html">Landscape</a> document. This page tries to give an overview of used and free bits of
+the array so you can quickly see what is used and what is not.
+<ul>
+  <li><span style="font-weight: bold;"><span class="free">O</span></span> - bit is free</li>
+  <li><span style="font-weight: bold;"><span class="used">X</span></span> - bit is used</li>
+  <li><span style="font-weight: bold;"><span class="abuse">&nbsp;</span></span> - bit of attribute is abused for different purposes</li>
+</ul>
+<p>
+<ul>
+  <li><span style="font-weight: bold;">type_height</span> - 8 bits in size, stores tile height (lower 4 bits) and tile class (upper 4 bits)</li>
+  <li><span style="font-weight: bold;">m1</span> - 8 bits in size, used to identify the owner of that tile (eg piece of rail, bridge, etc.)</li>
+  <li><span style="font-weight: bold;">m2</span> - 16 bits in size, used to identify the index of the given tile (object) in the (object-)array</li>
+  <li><span style="font-weight: bold;">m3</span> - 8 bits in size, is used for general storage</li>
+  <li><span style="font-weight: bold;">m4</span> - 8 bits in size, is used for general storage</li>
+  <li><span style="font-weight: bold;">m5</span> - 8 bits in size, is used for general storage</li>
+</ul>
+
+<table align=center border="1" cellpadding="2" cellspacing="2">
+  <tbody>
+    <tr>
+      <th colspan=2>class</th>
+      <th>m1 (8)</th>
+      <th>m2 (16)</th>
+      <th>m3 (8)</th>
+      <th>m4 (8)</th>
+      <th>type_height (8)</th>
+      <th>m5 (8)</th>
+    </tr>
+    <tr>
+      <td colspan=2 class="caption">bits</td>
+      <td class="bits">7654 3210</td>
+      <td class="bits">FEDC BA98 7654 3210</td>
+      <td class="bits">7654 3210</td>
+      <td class="bits">7654 3210</td>
+      <td class="bits">7654 3210</td>
+      <td class="bits">7654 3210</td>
+    </tr>
+    <tr>
+      <td rowspan="2">0</td>
+      <td class="caption">ground</td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits"><span class="free">OOOO OOOO OOOO OOOO</span></td>
+      <td class="bits"><span class="free">OOOO OOOO</span></td>
+      <td class="bits">XXXX XX<span class="free">OO</span></td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits">XXXX XXXX</td>
+    </tr>
+    <tr>
+      <td class="caption">farmland</td>
+      <td class="bits">-inherit-</td>
+      <td class="bits">XXXX XXXX XXXX XXXX</td>
+      <td class="bits"><span class="free">OOOO</span> XXXX</td>
+      <td class="bits">-inherit-</td>
+      <td class="bits">-inherit-</td>
+      <td class="bits"><span class="free">OOO</span>X XXXX</td>
+    </tr>
+    <tr>
+      <td rowspan=3>1</td>
+      <td class="caption">rail</td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits"><span class="free">OOOO OOOO</span> XXXX XXXX</td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits"><span class="free">OOOO O</span>XXX</td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits">XXXX XXXX</td>
+    </tr>
+    <tr>
+      <td class="caption">depot</td>
+      <td class="bits">-inherit-</td>
+      <td class="bits"><span class="free">OOOO OOOO OOOO OOOO</span></td>
+      <td class="bits"><span class="free">OOOO</span> XXXX</td>
+      <td class="bits"><span class="free">OOOO</span> XXXX</td>
+      <td class="bits">-inherit-</td>
+      <td class="bits">XX<span class="free">OO O</span>XXX</td>
+    </tr>
+    <tr>
+      <td class="caption">waypoint</td>
+      <td class="bits">-inherit-</td>
+      <td class="bits">XXXX XXXX XXXX XXXX</td>
+      <td class="bits"><span class="free">OOOO</span> XXXX</td>
+      <td class="bits"><span class="free">OOOO</span> XXXX</td>
+      <td class="bits">-inherit-</td>
+      <td class="bits">XX<span class="free">OO O</span>XXX</td>
+    </tr>
+    <tr>
+      <td rowspan=3>2</td>
+      <td class="caption">road</td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits">XXXX XXXX XXXX XXXX</td>
+      <td class="bits"><span class="free">OOOO OOOO</span></td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits">XXXX XXXX</td>
+    </tr>
+    <tr>
+      <td class="caption">level crossing</td>
+      <td class="bits">-inherit-</td>
+      <td class="bits">-inherit-</td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits">-inherit-</td>
+      <td class="bits">XXXX XX<span class="free">OO</span></td>
+    </tr>
+    <tr>
+      <td class="caption">road depot</td>
+      <td class="bits">-inherit-</td>
+      <td class="bits"><span class="free">OOOO OOOO OOOO OOOO</span></td>
+      <td class="bits"><span class="free">OOOO OOOO</span></td>
+      <td class="bits">X<span class="free">OOO OOOO</span></td>
+      <td class="bits">-inherit-</td>
+      <td class="bits">XXXX XXXX</td>
+    </tr>
+    <tr>
+      <td>3</td>
+      <td class="caption">town</td>
+      <td class="bits"><span class="abuse">XXXX XXXX</span></td>
+      <td class="bits">XXXX XXXX XXXX XXXX</td>
+      <td class="bits">XX<span class="free">OO OOOO</span></td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits">X<span class="free">O</span>XX XXXX</td>
+    </tr>
+    <tr>
+      <td>4</td>
+      <td class="caption">trees</td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits"><span class="free">OOOO OOOO</span> XXXX XXXX</td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits">XXXX XX<span class="free">OO</span></td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits">XX<span class="free">OO O</span>XXX</td>
+    </tr>
+    <tr>
+      <td>5</td>
+      <td class="caption">station</td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits">XXXX XXXX XXXX XXXX</td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits">XXXX XXXX</td>
+    </tr>
+    <tr>
+      <td>6</td>
+      <td class="caption">water</td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits"><span class="free">OOOO OOOO OOOO OOOO</span></td>
+      <td class="bits"><span class="free">OOOO OOOO</span></td>
+      <td class="bits"><span class="free">OOOO OOOO</span></td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits">XXXX XXXX</td>
+    </tr>
+    <tr>
+      <td rowspan=6>8</td>
+      <td class="caption">industry</td>
+      <td class="bits"><span class="abuse">X</span><span class="free">OO</span><span class="abuse">X XXXX</span></td>
+      <td class="bits">XXXX XXXX XXXX XXXX</td>
+      <td class="bits"><span class="free">OOOO OOOO</span></td>
+      <td class="bits"><span class="free">OOOO OOOO</span></td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits">XXXX XXXX</td>
+    </tr>
+    <tr>
+      <td>bubble/sugar/toffee</td>
+      <td class="bits"><span class="abuse">X</span><span class="free">OOO OOOO</span></td>
+      <td class="bits">-inherit-</td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits"><span class="free">OOOO OOOO</span></td>
+      <td class="bits">-inherit-</td>
+      <td class="bits">-inherit-</td>
+    </tr>
+    <tr>
+      <td>toy factory</td>
+      <td class="bits"><span class="abuse">X</span><span class="free">OOO OOOO</span></td>
+      <td class="bits">-inherit-</td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits">-inherit-</td>
+      <td class="bits">-inherit-</td>
+    </tr>
+    <tr>
+      <td>gold/copper/coal</td>
+      <td class="bits"><span class="abuse">XX</span><span class="free">OO OO</span><span class="abuse">XX</span></td>
+      <td class="bits">-inherit-</td>
+      <td class="bits">-inherit-</td>
+      <td class="bits">-inherit-</td>
+      <td class="bits">-inherit-</td>
+      <td class="bits">-inherit-</td>
+    </tr>
+    <tr>
+      <td>oil wells</td>
+      <td class="bits"><span class="abuse">X</span><span class="free">OOO OO</span><span class="abuse">XX</span></td>
+      <td class="bits">-inherit-</td>
+      <td class="bits">-inherit-</td>
+      <td class="bits">-inherit-</td>
+      <td class="bits">-inherit-</td>
+      <td class="bits">-inherit-</td>
+    </tr>
+    <tr>
+      <td>power station</td>
+      <td class="bits"><span class="abuse">X</span><span class="free">O</span><span class="abuse">XX XX</span><span class="free">OO</span></td>
+      <td class="bits">-inherit-</td>
+      <td class="bits">-inherit-</td>
+      <td class="bits">-inherit-</td>
+      <td class="bits">-inherit-</td>
+      <td class="bits">-inherit-</td>
+    </tr>
+    <tr>
+      <td rowspan=3>9</td>
+      <td class="caption">tunnel</td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits"><span class="free">OOOO OOOO OOOO OOOO</span></td>
+      <td class="bits"><span class="free">OOOO</span> XXXX</td>
+      <td class="bits">X<span class="free">OOO OOOO</span></td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits">X<span class="free">OOO</span> XXXX</td>
+    </tr>
+    <tr>
+      <td>bridge ramp</td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits"><span class="free">OOOO OOOO</span> <span class="abuse">XXXX</span> <span class="free">OOOO</span></td>
+      <td class="bits"><span class="free">OOOO</span> XXXX</td>
+      <td class="bits">X<span class="free">OOO OOOO</span></td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits">XXX<span class="free">O O</span>XXX</td>
+    </tr>
+    <tr>
+      <td>bridge middle part</td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits"><span class="free">OOOO OOOO</span> <span class="abuse">XXXX XXXX</span></td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits">X<span class="free">OOO OOOO</span></td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits">XXXX XXXX</td>
+    </tr>
+    <tr>
+      <td>A</td>
+      <td class="caption">various (HQ)</td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits"><span class="free">OOOO OOOO OOOO OOOO</span></td>
+      <td class="bits"><span class="free">OOOO OOOO</span></td>
+      <td class="bits"><span class="free">OOOO OOOO</span></td>
+      <td class="bits">XXXX XXXX</td>
+      <td class="bits">XXXX XXXX</td>
+    </tr>
+  </tbody>
+</table>
+
+</body>
+</html>
